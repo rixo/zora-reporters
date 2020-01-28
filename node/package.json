@@ -1,6 +1,6 @@
 {
   "name": "zora-node-reporter",
-  "version": "0.0.1-rixo.2",
+  "version": "0.0.1-rixo.3",
   "description": "A reporter for zora which targets nodejs environment",
   "main": "dist/index",
   "types": "dist/declarations/index.d.ts",

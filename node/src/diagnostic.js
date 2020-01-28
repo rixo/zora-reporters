@@ -57,8 +57,10 @@ export const isNotDiagnostic = () => ({
 });
 export const errorDiagnostic = (diag) => ({
     report(out) {
-        const padded = diag.actual.split('\n').map(s => '    ' + s).join('\n');
-        out.writeBlock(padded, 0);
+        const error = diag.actual;
+        const stack = String(error && error.stack || error)
+            .split('\n').map(s => '    ' + s).join('\n');
+        out.writeBlock(stack, 0);
     }
 });
 export const countPadding = (string) => {

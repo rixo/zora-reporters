@@ -84,8 +84,10 @@ export const isNotDiagnostic: DiagnosticReporterFactory = () => ({
 
 export const errorDiagnostic: DiagnosticReporterFactory = (diag: AssertionResult) => ({
     report(out) {
-      const padded = (diag.actual as string).split('\n').map(s => '    ' + s).join('\n')
-      out.writeBlock(padded, 0);
+      const error: Error = diag.actual
+      const stack = String(error && error.stack || error)
+        .split('\n').map(s => '    ' + s).join('\n')
+      out.writeBlock(stack, 0);
     }
 });
 
