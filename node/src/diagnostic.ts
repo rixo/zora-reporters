@@ -82,6 +82,13 @@ export const isNotDiagnostic: DiagnosticReporterFactory = () => ({
     }
 });
 
+export const errorDiagnostic: DiagnosticReporterFactory = (diag: AssertionResult) => ({
+    report(out) {
+      const padded = (diag.actual as string).split('\n').map(s => '    ' + s).join('\n')
+      out.writeBlock(padded, 0);
+    }
+});
+
 export const countPadding = (string: string) => {
     let counter = 0;
     let i = 0;
@@ -215,6 +222,8 @@ export const getDiagnosticReporter = (diag: AssertionResult) => {
             return isNotDiagnostic();
         case Operator.EQUAL:
             return equalDiagnostic(diag);
+        case Operator.DOES_NOT_THROW:
+            return errorDiagnostic(diag);
         default:
             return unknownOperatorDiagnostic(diag);
     }

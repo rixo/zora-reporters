@@ -55,6 +55,12 @@ export const isNotDiagnostic = () => ({
         out.writeBlock(`expected values to point ${out.operator('DIFFERENT REFERENCES')} but they point the same`, 4);
     }
 });
+export const errorDiagnostic = (diag) => ({
+    report(out) {
+        const padded = diag.actual.split('\n').map(s => '    ' + s).join('\n');
+        out.writeBlock(padded, 0);
+    }
+});
 export const countPadding = (string) => {
     let counter = 0;
     let i = 0;
@@ -171,6 +177,8 @@ export const getDiagnosticReporter = (diag) => {
             return isNotDiagnostic();
         case "equal" /* EQUAL */:
             return equalDiagnostic(diag);
+        case "doesNotThrow" /* DOES_NOT_THROW */:
+            return errorDiagnostic(diag);
         default:
             return unknownOperatorDiagnostic(diag);
     }
